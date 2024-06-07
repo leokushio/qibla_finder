@@ -13,7 +13,7 @@ class QuranScreen extends StatelessWidget {
     return Stack(
       children: [
 
-    // ---     
+    // ---  BG / Title & back Navigation
         Container(
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
@@ -24,11 +24,10 @@ class QuranScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: XSizes.appBarHeight),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
                   onPressed: ()=> Navigator.pop(context), 
-                  icon: Icon(Icons.arrow_back_ios_new, color: Colors.white,)
+                  icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white,)
                   ),
                 // SizedBox(width: XSizes.sm,),
                 Text('Quran', style: Theme.of(context).textTheme.headlineLarge,)
@@ -37,7 +36,7 @@ class QuranScreen extends StatelessWidget {
           ),
         ),
 
-    // ---
+    // --- Mosque Image
         Positioned(
           top: -40,
           right: -10,
@@ -47,7 +46,7 @@ class QuranScreen extends StatelessWidget {
 
           ),
 
-    // ---
+    // --- Body Widget
         Positioned(
           bottom: 0,
           child: Container(
@@ -55,7 +54,7 @@ class QuranScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             color: Colors.white,
           )
-          ),
+        ),
        
       ],
     );
