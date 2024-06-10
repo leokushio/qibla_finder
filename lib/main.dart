@@ -4,6 +4,7 @@ import 'package:qibla_finder/providers/api_provider.dart';
 import 'package:qibla_finder/providers/permissions_provider.dart';
 import 'package:qibla_finder/screens/home_screen/home_screen.dart';
 import 'package:qibla_finder/screens/quran_screen/quran_screen.dart';
+import 'package:qibla_finder/screens/surah_screen/surah_screen.dart';
 import 'package:qibla_finder/theme/theme.dart';
 
 void main() {
@@ -29,7 +30,8 @@ class MainApp extends StatelessWidget {
       home: const HomeScreen(),
       routes: {
         '/home_screen' : (context) => const HomeScreen(),
-        '/quran_screen' :(context) => const QuranScreen()
+        '/quran_screen' :(context) => const QuranScreen(),
+        '/surah_screen' : (context) => const SurahScreen(),
       },
     );
   }

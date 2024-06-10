@@ -7,6 +7,8 @@ class XImages {
   // -- Icons
   static const String compass = 'assets/icons/qibla_compass.svg';
 
+  // -- Bismillah
+  static const String bismillah = 'assets/images/bismillah_img.svg';
 
 
 }

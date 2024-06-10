@@ -1,6 +1,12 @@
 
+import 'package:flutter/material.dart';
+
 class XSizes {
 
+  // Screen Size
+  static double screenWidth(context) => MediaQuery.of(context).size.width;
+  static double screenHeight(context) => MediaQuery.of(context).size.height;
+  
   // Padding and Margin Sizes
   static const double xs = 4.0;
   static const double sm = 8.0;

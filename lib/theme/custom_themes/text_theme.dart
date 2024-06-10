@@ -5,6 +5,7 @@ class XTextTheme {
 
   static TextTheme appTextTheme = TextTheme(
     headlineLarge: const TextStyle().copyWith(fontSize: 36.0, fontWeight: FontWeight.w400,color: Colors.white),
+    headlineMedium: const TextStyle().copyWith(fontSize: 18.0, fontWeight: FontWeight.w600,color: Colors.white),
 
     // --  for headers
     titleLarge: const TextStyle().copyWith(fontSize: 22.0, fontWeight: FontWeight.w700,color: Colors.white),
