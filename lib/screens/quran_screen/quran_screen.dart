@@ -38,8 +38,9 @@ class QuranScreen extends StatelessWidget {
       // --- TabBar View
               Expanded(
                 child: TabBarView(children: [
+          //--- surah tab
                   SurahTab(surahs: surahs),
-
+          //--- juz tab
                   Container(
                     width: double.infinity,
                     child: GridView.builder(

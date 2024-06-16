@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qibla_finder/providers/api_provider.dart';
+import 'package:qibla_finder/providers/audio_provider.dart';
 import 'package:qibla_finder/providers/permissions_provider.dart';
 import 'package:qibla_finder/screens/home_screen/home_screen.dart';
 import 'package:qibla_finder/screens/quran_screen/quran_screen.dart';
@@ -12,6 +13,7 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (context) => PermissionsProvider()),
       ChangeNotifierProvider(create: (context) => APIProvider()),
+      ChangeNotifierProvider(create: (context) => AudioProvider()),
     ],
     
     child: const MainApp())

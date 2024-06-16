@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:qibla_finder/models/surah_audio_model.dart' as a;
+import 'package:qibla_finder/models/surah_audio_model.dart';
+import 'package:qibla_finder/models/surah_model.dart' as b;
 import 'package:qibla_finder/models/surah_model.dart';
 import 'package:qibla_finder/models/surah_list_model.dart';
 
@@ -17,7 +20,7 @@ class APIProvider extends ChangeNotifier{
     SurahModel(
       code: 200, 
       status: 'OK', 
-      data: Data(
+      data: b.Data(
         number: 0, 
         name: 'test', 
         englishName: '', 
@@ -25,26 +28,63 @@ class APIProvider extends ChangeNotifier{
         revelationType: '', 
         numberOfAyahs: 0, 
         ayahs: [], 
-        edition: Edition(identifier: '', language: '', name: '', englishName: '', format: '', type: '', direction: '')
+        edition: b.Edition(identifier: '', language: '', name: '', englishName: '', format: '', type: '', direction: '')
       )
     );
 
-    SurahModel surahArabicModel = 
+  SurahModel surahArabicModel = 
     SurahModel(
       code: 200, 
       status: 'OK', 
-      data: Data(
+      data: b.Data(
         number: 0, 
         name: 'test', 
         englishName: '', 
         englishNameTranslation: '', 
         revelationType: '', 
         numberOfAyahs: 0, 
-        ayahs: [], 
-        edition: Edition(identifier: '', language: '', name: '', englishName: '', format: '', type: '', direction: '')
+        ayahs: <b.Ayah>[], 
+        edition: b.Edition(identifier: '', language: '', name: '', englishName: '', format: '', type: '', direction: '')
       )
     );
 
+  SurahAudioModel surahAudioModel = SurahAudioModel(
+    code: 200, 
+    status: "OK", 
+    data: a.Data(
+      number: 0, 
+      name: '', 
+      englishName: '', 
+      englishNameTranslation: '', 
+      revelationType: '', 
+      numberOfAyahs: 0, 
+      ayahs: <a.Ayah>[], 
+      edition: a.Edition(
+        identifier: '', 
+        language: '', 
+        name: '', 
+        englishName: '', 
+        format: '', 
+        type: '', 
+        direction: '')
+      )
+    );
+
+   getSurahAudioFromAPI(int index) async{
+    try {
+      Response response = await http.get(Uri.parse('$surahsURL/${index.toString()}/ar.alafasy'));
+      if (response.statusCode == 200) {
+        surahAudioModel = surahAudioModelFromJson(response.body);
+      } else {
+        error = response.statusCode.toString();
+      }
+    } catch (e) {
+       error = e.toString();
+    }
+    // isLoadingOffers = false;
+    notifyListeners();
+  }
+  
   getSurahsFromAPI() async{
     try {
       Response response = await http.get(Uri.parse(surahsURL));
