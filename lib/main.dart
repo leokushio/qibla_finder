@@ -7,8 +7,10 @@ import 'package:qibla_finder/screens/home_screen/home_screen.dart';
 import 'package:qibla_finder/screens/quran_screen/quran_screen.dart';
 import 'package:qibla_finder/screens/surah_screen/surah_screen.dart';
 import 'package:qibla_finder/theme/theme.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
 
 void main() {
+  // await MobileAds.initialize();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => PermissionsProvider()),

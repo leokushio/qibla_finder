@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -13,6 +15,17 @@ class APIProvider extends ChangeNotifier{
   'https://api.alquran.cloud/v1/surah';
 
   String error ='';
+
+
+  
+  int currentSurahIndex = 0;
+  int random = Random().nextInt(113);
+
+  setCurrentSurahIndex(int index) {
+    currentSurahIndex = index;
+    notifyListeners();
+  }
+  
 
   Surahs surahsListModel = Surahs(code: 200, status: 'OK', data: []);
 
@@ -83,6 +96,7 @@ class APIProvider extends ChangeNotifier{
     }
     // isLoadingOffers = false;
     notifyListeners();
+    return surahAudioModel;
   }
   
   getSurahsFromAPI() async{
@@ -98,6 +112,7 @@ class APIProvider extends ChangeNotifier{
     }
     // isLoadingOffers = false;
     notifyListeners();
+    return surahsListModel;
   }
 
   getSurahEnglishFromAPI(int index) async{
@@ -113,6 +128,7 @@ class APIProvider extends ChangeNotifier{
     }
     // isLoadingOffers = false;
     notifyListeners();
+    return surahEnglishModel;
   }
   getSurahArabicFromAPI(int index) async{
     try {
@@ -127,5 +143,6 @@ class APIProvider extends ChangeNotifier{
     }
     // isLoadingOffers = false;
     notifyListeners();
+    return surahArabicModel;
   }
 }

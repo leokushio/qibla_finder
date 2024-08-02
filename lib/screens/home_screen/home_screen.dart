@@ -1,22 +1,57 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:qibla_finder/common_widgets/app_bar.dart';
 import 'package:qibla_finder/constants/colors.dart';
 import 'package:qibla_finder/constants/image_strings.dart';
 import 'package:qibla_finder/constants/sizes.dart';
+import 'package:qibla_finder/providers/api_provider.dart';
 import 'package:qibla_finder/screens/home_screen/widgets/compass_bottom_sheet.dart';
-import 'package:qibla_finder/screens/home_screen/widgets/menu_button.dart';
+import 'package:qibla_finder/screens/quran_screen/tabs/surah_tab.dart';
 import 'package:qibla_finder/theme/custom_themes/text_theme.dart';
+import 'package:yandex_mobileads/mobile_ads.dart';
+import 'package:qibla_finder/models/surah_list_model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    
+    super.initState();
+    MobileAds.setUserConsent(true);
+    MobileAds.initialize();
+  }
+  @override
   Widget build(BuildContext context) {  
+    final providerAPI = Provider.of<APIProvider>(context);
+    final surahs = Provider.of<APIProvider>(context).surahsListModel.data;
+    providerAPI.getSurahsFromAPI();
     const String appBarTitle = "Muslim Qibla App";
+    final banner = BannerAd(
+      adUnitId: 'R-M-10310535-1', 
+      adSize: BannerAdSize.sticky(width: MediaQuery.of(context).size.width.round())
+      );
+
+
     return Scaffold(
+      bottomNavigationBar: Container(
+        // height: 70, 
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: AdWidget(bannerAd: banner),
+        ),
+      // persistentFooterButtons: [Container(height: 100, width: MediaQuery.of(context).size.width,color: Colors.blue,)],
       extendBodyBehindAppBar: true,
       appBar: const XAppBar(appBarTitle: appBarTitle),
   
@@ -37,23 +72,13 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: XSizes.spaceBtwItems,),
                 
   // --- Header Card (Surah of the day)
-              const HeaderCard(),
+              HeaderCard(surahs: surahs),
                 
-  // -- Menu Section
-              XMenuButton(onTap: (){Navigator.pushNamed(context, '/quran_screen');}, icon: Iconsax.book, title: 'Quran'),
-              const SizedBox(height: XSizes.spaceBtwItems,),
-              XMenuButton(onTap: (){}, icon: Icons.mosque, title: 'Prayer Times'),
-              const SizedBox(height: XSizes.spaceBtwItems,),
-              XMenuButton(onTap: (){}, icon: Iconsax.bookmark, title: 'Saved Suras'),
-              const SizedBox(height: XSizes.spaceBtwItems,),
-  // ---
-              Container(
-                height: 150,
-                decoration: BoxDecoration(
-                  color: XColors.secondary,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-              )             
+  // -- Surahs Section
+              Expanded(
+                child: SurahTab(surahs: surahs)
+              ),
+                     
             ],
           ),
         )
@@ -61,8 +86,11 @@ class HomeScreen extends StatelessWidget {
   // -- Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () => compassBottomSheet(context),        
-        backgroundColor: XColors.primary,
-        foregroundColor: Colors.white,
+        backgroundColor: XColors.secondary,
+        foregroundColor: XColors.primary,
+        elevation: 20,
+        
+        
         child: const Icon(CupertinoIcons.compass, size: XSizes.iconLg,),
         ),
     );
@@ -73,11 +101,18 @@ class HomeScreen extends StatelessWidget {
 
 class HeaderCard extends StatelessWidget {
   const HeaderCard({
+    required this.surahs,
     super.key,
   });
 
+  final List<Datum>surahs;
+
   @override
   Widget build(BuildContext context) {
+    int randomNumber = 0;
+    randomNumber = Provider.of<APIProvider>(context).random;
+    
+    
     return Stack(
       children: [
         Container(
@@ -94,7 +129,7 @@ class HeaderCard extends StatelessWidget {
           height: MediaQuery.of(context).size.width * 0.41,
           ),
         Container(
-          padding: EdgeInsets.only(top: XSizes.lg, right: XSizes.lg),
+          padding: const EdgeInsets.only(top: XSizes.lg, right: XSizes.lg),
           alignment: Alignment.centerRight,
           width: double.infinity,
           child: Column(
@@ -108,8 +143,17 @@ class HeaderCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: XSizes.spaceBtwItems,),
-              Text('Al-Fatiah', style: XTextTheme.appTextTheme.titleMedium,),
-              Text('Surah No: 1',  style: TextStyle(color: Colors.grey[400]),),
+              Text(
+                surahs.isNotEmpty
+                ? surahs[randomNumber].name : '', 
+                style: XTextTheme.appTextTheme.titleMedium,
+                ),
+              Text(
+                surahs.isNotEmpty
+                ? surahs[randomNumber].englishName : '', 
+                style: XTextTheme.appTextTheme.titleMedium,
+                ),
+              Text('Surah No: ${randomNumber+1}',  style: TextStyle(color: Colors.grey[400]),),
             ],
           ),
         )

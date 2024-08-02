@@ -15,15 +15,15 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(appBarTitle),
-      actions: [Padding(
-        padding: const EdgeInsets.only(right: XSizes.md),
-        child: IconButton(
-          onPressed: (){},
-          icon: const Icon(Icons.more_horiz), 
-          iconSize: XSizes.iconLg, 
-          color: Colors.white,
-          ),
-      )],
+      // actions: [Padding(
+      //   padding: const EdgeInsets.only(right: XSizes.md),
+      //   child: IconButton(
+      //     onPressed: (){},
+      //     icon: const Icon(Icons.more_horiz), 
+      //     iconSize: XSizes.iconLg, 
+      //     color: Colors.white,
+      //     ),
+      // )],
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.white,
       elevation: 0,
